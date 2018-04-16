@@ -153,8 +153,11 @@ public class TesteCampoTreinamento {
 		//elemento.click();
 		//Assert.assertTrue(elemento.getText().contains("Campo de Treinamento"));
 		//Thread.sleep(1000);
-		WebElement elementoTexto = driver.findElement(By.tagName("h3"));
-		Assert.assertTrue(elementoTexto.getText().contains("Campo de Treinamento"));
+		//WebElement elementoTexto = driver.findElement(By.tagName("h3"));
+		//Assert.assertTrue(elementoTexto.getText().contains("Campo de Treinamento"));
+		Assert.assertEquals("Campo de Treinamento", dsl.obterTexto(By.tagName("h3")));
+		
+		Assert.assertEquals("Cuidado onde clica, muitas armadilhas...", dsl.obterTexto(By.className("facilAchar")));
 
 	}
 
