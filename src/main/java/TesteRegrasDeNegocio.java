@@ -16,12 +16,14 @@ public class TesteRegrasDeNegocio {
 	private WebDriver driver;
 	private String baseUrl = "file:///c:/Users/Camila/Documents/campo-treinamento/componentes.html";
 	private DSL dsl;
+	private  CampoTreinamentoPage page;
 	
 	public TesteRegrasDeNegocio() {
 		System.setProperty("webdriver.gecko.driver", "C:\\WebDrivers\\firefox\\0.20.1\\geckodriver.exe");
 		driver = new FirefoxDriver();
 		driver.get(this.baseUrl);
 		dsl = new DSL(driver);
+		page = new CampoTreinamentoPage(driver);
 	}
 	
 	@BeforeClass
@@ -96,20 +98,14 @@ public class TesteRegrasDeNegocio {
 	@Test
 	public void validarCampoEsporte() throws InterruptedException {
 		
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Marlon");
-		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Pinto");
-		driver.findElement(By.id("elementosForm:sexo:0")).click();
-		//driver.findElement(By.id("elementosForm:sexo:0")).click();
-		driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
-		//driver.findElement(By.id("elementosForm:comidaFavorita:3")).click();
+		page.setNome("Marlon");
+		page.setSobreNome("Pinto");
+		page.setSexoMasculino();
+		page.setComidaPizza();
 		
-		Select esporte = new Select(driver.findElement(By.id("elementosForm:esportes")));
-		//esporte.selectByIndex(1);
-		//esporte.selectByIndex(4);
-		esporte.selectByVisibleText("Futebol");
-		esporte.selectByVisibleText("O que eh esporte?");
+		page.setEsporte("Futebol", "O que eh esporte?");
+		page.cadastrar();
 		
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
 		driver.switchTo().alert();
 		Alert mensagemAlerta = driver.switchTo().alert();
 		//Thread.sleep(3000);
