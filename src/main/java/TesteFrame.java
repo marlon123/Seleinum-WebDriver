@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 
@@ -12,6 +13,7 @@ public class TesteFrame {
 	
 	WebDriver driver;// = new FirefoxDriver();
 	String baseUrl = "file:///c:/Users/Camila/Documents/campo-treinamento/componentes.html";
+	DSL dsl;
 	
 	@Before
 	public void setUp() {
@@ -36,6 +38,17 @@ public class TesteFrame {
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("elementosForm:nome")).sendKeys(mensagemAlerta);
 		
+	}
+	
+	@Test
+	public void interagirComFrameEscondido() {
+		
+		WebElement frame = driver.findElement(By.id("frame2"));
+		dsl.executarJS("window.scrollBy(0, arguments[0])", frame.getLocation().y);
+		dsl.entrarFrame("frame2");
+		dsl.clicarBotao("frameButton");
+		String msg = dsl.alertaObterTextoEAceita();
+		Assert.assertEquals("Frame OK!", msg);
 	}
 	
 	@After
